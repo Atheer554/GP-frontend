@@ -128,27 +128,37 @@ export default function DashboardPage() {
     }}
   />
 </div>
+/*check the src for image i need to ad to react public folder  */
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "30px",
-        }}
-      >
-        <div
-          onClick={() => navigate("/patients")}
-          style={{
-            background: "white",
-            padding: "40px",
-            borderRadius: "20px",
-            cursor: "pointer",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>Patients List</h2>
-          <p>View patients and their analysis history</p>
-        </div>
+<div
+  onClick={() => navigate("/patients")}
+  
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = "translateY(-5px)";
+  }}
+
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = "translateY(0px)";
+  }}
+
+  style={{
+    background: "white",
+    padding: "35px",
+    minHeight: "180px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    transition: "0.2s ease",
+    borderRadius: "20px",
+    cursor: "pointer",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+  }}
+>
+  <h2>Patients List</h2>
+
+  <p>View your patients    </p>
+</div>      
+
 
         <div
           onClick={() => navigate("/predict")}
