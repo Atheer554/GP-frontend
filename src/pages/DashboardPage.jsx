@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom"
+import { FaUserInjured } from "react-icons/fa";
+import { MdAnalytics } from "react-icons/md";
 
 export default function DashboardPage() {
   const navigate = useNavigate()
@@ -6,8 +8,8 @@ export default function DashboardPage() {
   return (
     <div
       style={{
-        minHeight: "100vh",
-        backgroundColor: "#f5f7fb",
+        minHeight: "140px",
+        backgroundColor: "#eef2f7",
         padding: "40px",
         fontFamily: "Inter, sans-serif",
       }}
@@ -21,14 +23,15 @@ export default function DashboardPage() {
     background: "white",
     borderRadius: "18px",
     marginBottom: "40px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+    boxShadow:  "0 8px 24px rgba(15, 23, 42, 0.06)",
+    border: "1px solid #e2e8f0",
   }}
 >
   <div>
     <h1
       style={{
         margin: 0,
-        color: "#1e293b",
+        color: "#0f172a",
         fontSize: "28px",
       }}
     >
@@ -37,7 +40,7 @@ export default function DashboardPage() {
 
     <p
       style={{
-        color: "#64748b",
+        color: "#475569",
         marginTop: "5px",
       }}
     >
@@ -72,7 +75,7 @@ export default function DashboardPage() {
 </div>
 <div
   style={{
-    background: "white",
+    background: "linear-gradient(to right, #ffffff, #f8fbff)",
     borderRadius: "24px",
     padding: "40px",
     marginBottom: "40px",
@@ -87,7 +90,7 @@ export default function DashboardPage() {
       style={{
         fontSize: "40px",
         marginBottom: "15px",
-        color: "#1e293b",
+        color:  "#0f172a" ,
       }}
     >
       Welcome back, Doctor
@@ -135,12 +138,16 @@ export default function DashboardPage() {
   onClick={() => navigate("/patients")}
   
   onMouseEnter={(e) => {
-    e.currentTarget.style.transform = "translateY(-5px)";
-  }}
+  e.currentTarget.style.transform = "translateY(-5px)";
+  e.currentTarget.style.boxShadow =
+    "0 12px 28px rgba(15, 23, 42, 0.12)";
+}}
 
   onMouseLeave={(e) => {
-    e.currentTarget.style.transform = "translateY(0px)";
-  }}
+  e.currentTarget.style.transform = "translateY(0px)";
+  e.currentTarget.style.boxShadow =
+    "0 8px 24px rgba(15, 23, 42, 0.06)";
+}}
 
   style={{
     background: "white",
@@ -152,10 +159,18 @@ export default function DashboardPage() {
     transition: "0.2s ease",
     borderRadius: "20px",
     cursor: "pointer",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+    boxShadow: "0 8px 24px rgba(15, 23, 42, 0.06)",
+    border: "1px solid #e2e8f0",
   }}
 >
-  <h2>Patients List</h2>
+  <FaUserInjured
+  size={38}
+  color="#2563eb"
+  style={{ marginBottom: "20px" }}
+/>
+  <h2 style={{ color: "#0f172a" }}>
+  Patients List
+</h2>
 
   <p>View your patients    </p>
 </div>      
@@ -165,13 +180,16 @@ export default function DashboardPage() {
   onClick={() => navigate("/predict")}
 
   onMouseEnter={(e) => {
-    e.currentTarget.style.transform = "translateY(-5px)";
-  }}
+  e.currentTarget.style.transform = "translateY(-5px)";
+  e.currentTarget.style.boxShadow =
+    "0 12px 28px rgba(15, 23, 42, 0.12)";
+}}
 
-  onMouseLeave={(e) => {
-    e.currentTarget.style.transform = "translateY(0px)";
-  }}
-
+ onMouseLeave={(e) => {
+  e.currentTarget.style.transform = "translateY(0px)";
+  e.currentTarget.style.boxShadow =
+    "0 8px 24px rgba(15, 23, 42, 0.06)";
+}}
   style={{
     background: "white",
     padding: "35px",
@@ -182,10 +200,18 @@ export default function DashboardPage() {
     transition: "0.2s ease",
     borderRadius: "20px",
     cursor: "pointer",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+    boxShadow: "0 8px 24px rgba(15, 23, 42, 0.06)",
+    border: "1px solid #e2e8f0",
   }}
 >
-  <h2>Add Analysis</h2>
+  <MdAnalytics
+  size={38}
+  color="#2563eb"
+  style={{ marginBottom: "20px" }}
+/>
+ <h2 style={{ color: "#0f172a" }}>
+ Add Analysis
+</h2>
 
   <p>Create a new breast cancer analysis</p>
 </div>
