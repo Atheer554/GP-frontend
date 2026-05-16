@@ -9,6 +9,7 @@ export default function DashboardPage() {
         minHeight: "100vh",
         backgroundColor: "#f5f7fb",
         padding: "40px",
+        fontFamily: "Inter, sans-serif",
       }}
     >
       <div
