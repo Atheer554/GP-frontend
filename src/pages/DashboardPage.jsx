@@ -12,34 +12,63 @@ export default function DashboardPage() {
       }}
     >
       <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "40px",
-        }}
-      >
-        <div>
-  <h1 style={{ margin: 0 }}>ELPIS AI</h1>
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "20px 30px",
+    background: "white",
+    borderRadius: "18px",
+    marginBottom: "40px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+  }}
+>
+  <div>
+    <h1
+      style={{
+        margin: 0,
+        color: "#1e293b",
+        fontSize: "28px",
+      }}
+    >
+      ELPIS AI
+    </h1>
 
-  <p style={{ color: "#666", marginTop: "5px" }}>
-    Breast Cancer Detection System
-  </p>
+    <p
+      style={{
+        color: "#64748b",
+        marginTop: "5px",
+      }}
+    >
+      Breast Cancer Detection System
+    </p>
+  </div>
+
+  <div
+    style={{
+      display: "flex",
+      gap: "25px",
+      alignItems: "center",
+    }}
+  >
+    <span style={{ cursor: "pointer" }}>Home</span>
+
+    <span
+      style={{ cursor: "pointer" }}
+      onClick={() => navigate("/patients")}
+    >
+      Patients
+    </span>
+
+    <span style={{ cursor: "pointer" }}>
+      History
+    </span>
+
+    <span style={{ cursor: "pointer", color: "#dc2626" }}>
+      Logout
+    </span>
+  </div>
 </div>
-
-        <button
-          onClick={() => navigate("/profile")}
-          style={{
-            padding: "10px 18px",
-            border: "none",
-            borderRadius: "10px",
-            cursor: "pointer",
-          }}
-        >
-          Profile
-        </button>
-      </div>
-
       <div
         style={{
           display: "grid",
