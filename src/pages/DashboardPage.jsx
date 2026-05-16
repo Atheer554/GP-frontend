@@ -128,7 +128,7 @@ export default function DashboardPage() {
     }}
   />
 </div>
-/*check the src for image i need to ad to react public folder  */
+{/*check the src for image i need to ad to react public folder  */}
 
 <div
   onClick={() => navigate("/patients")}
@@ -158,7 +158,7 @@ export default function DashboardPage() {
 
   <p>View your patients    </p>
 </div>      
-/** this patient list card  */
+{/** this patient list card  */}
 
        <div
   onClick={() => navigate("/predict")}
