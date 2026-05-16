@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { FaUserInjured } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
+import medicalImage from "../assets/Breast cancer awareness-caute.svg";
 
 export default function DashboardPage() {
   const navigate = useNavigate()
