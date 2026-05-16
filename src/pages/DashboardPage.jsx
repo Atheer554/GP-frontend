@@ -126,7 +126,7 @@ export default function DashboardPage() {
   </div>
 
   <img
-    src="/medical-ai.svg"
+    src="/assets/Breast cancer awareness-caute.svg"
     alt="Medical AI"
     style={{
       width: "280px",
