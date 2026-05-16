@@ -56,22 +56,79 @@ export default function DashboardPage() {
       alignItems: "center",
     }}
   >
-    <span style={{ cursor: "pointer" }}>Home</span>
+    <span
+  style={{
+    cursor: "pointer",
+    transition: "0.2s ease",
+    color: "#0f172a",
+  }}
+
+  onMouseEnter={(e) => {
+    e.currentTarget.style.color = "#2563eb";
+  }}
+
+  onMouseLeave={(e) => {
+    e.currentTarget.style.color = "#0f172a";
+  }}
+>
+  Home
+</span>
 
     <span
-      style={{ cursor: "pointer" }}
-      onClick={() => navigate("/patients")}
-    >
-      Patients
-    </span>
+  style={{
+    cursor: "pointer",
+    transition: "0.2s ease",
+    color: "#0f172a",
+  }}
 
-    <span style={{ cursor: "pointer" }}>
-      History
-    </span>
+  onClick={() => navigate("/patients")}
 
-    <span style={{ cursor: "pointer", color: "#dc2626" }}>
-      Logout
-    </span>
+  onMouseEnter={(e) => {
+    e.currentTarget.style.color = "#2563eb";
+  }}
+
+  onMouseLeave={(e) => {
+    e.currentTarget.style.color = "#0f172a";
+  }}
+>
+  Patients
+</span>
+
+   <span
+  style={{
+    cursor: "pointer",
+    transition: "0.2s ease",
+    color: "#0f172a",
+  }}
+
+  onMouseEnter={(e) => {
+    e.currentTarget.style.color = "#2563eb";
+  }}
+
+  onMouseLeave={(e) => {
+    e.currentTarget.style.color = "#0f172a";
+  }}
+>
+  History
+</span>
+
+   <span
+  style={{
+    cursor: "pointer",
+    transition: "0.2s ease",
+    color: "#dc2626",
+  }}
+
+  onMouseEnter={(e) => {
+    e.currentTarget.style.opacity = "0.7";
+  }}
+
+  onMouseLeave={(e) => {
+    e.currentTarget.style.opacity = "1";
+  }}
+>
+  Logout
+</span>
   </div>
 </div>
 <div
