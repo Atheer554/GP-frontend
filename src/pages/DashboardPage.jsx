@@ -158,22 +158,34 @@ export default function DashboardPage() {
 
   <p>View your patients    </p>
 </div>      
+/** this patient list card  */
 
+       <div
+  onClick={() => navigate("/predict")}
 
-        <div
-          onClick={() => navigate("/predict")}
-          style={{
-            background: "white",
-            padding: "40px",
-            borderRadius: "20px",
-            cursor: "pointer",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>Add Analysis</h2>
-          <p>Create a new breast cancer analysis</p>
-        </div>
-      </div>
-    </div>
-  )
-}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = "translateY(-5px)";
+  }}
+
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = "translateY(0px)";
+  }}
+
+  style={{
+    background: "white",
+    padding: "35px",
+    minHeight: "180px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    transition: "0.2s ease",
+    borderRadius: "20px",
+    cursor: "pointer",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+  }}
+>
+  <h2>Add Analysis</h2>
+
+  <p>Create a new breast cancer analysis</p>
+</div>
+</div>)}
