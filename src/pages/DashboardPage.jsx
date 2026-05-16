@@ -108,7 +108,7 @@ export default function DashboardPage() {
       breast cancer analyses efficiently and securely.
     </p>
 
-    <button
+    {/*<button
       onClick={() => navigate("/predict")}
       style={{
         marginTop: "25px",
@@ -122,7 +122,7 @@ export default function DashboardPage() {
       }}
     >
       Start Analysis
-    </button>
+    </button>*/}
   </div>
 
   <img
