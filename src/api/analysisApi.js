@@ -1,26 +1,23 @@
 import client from './client'
 import { ROUTES } from '../utils/constants'
 
-export async function predictApi(file) {
+export async function predictApi(file, patientId) {
   const formData = new FormData()
 
   formData.append('file', file)
+  formData.append('patient_id', patientId)
 
   const response = await client.post(
     ROUTES.predict,
     formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
+    
   )
 
   return response.data
 }
 
-export async function getHistoryApi() {
-  const response = await client.get(ROUTES.history)
+export async function getHistoryApi(patientId) {
+  const response = await client.get(`/history/${patientId}`)
   return response.data
 }
 

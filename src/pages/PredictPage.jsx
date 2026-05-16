@@ -77,21 +77,27 @@ export default function PredictPage() {
   const handleAnalyze = async () => {
   if (!file) return
 
+  if  (!selectedPatient) {
+    setError("Please select a patient")
+    return
+  }
+
   try {
     setLoading(true)
     setError('')
 
-    const response = await predictApi(file)
+    const response = await predictApi(file, selectedPatient)
 
     console.log(response)
 
     setResult(response.analysis)
   } catch (err) {
     console.error(err)
+    console.log(err.response?.data)
 
     setError(
-      err.response?.data?.detail ||
-      'Analysis failed'
+      typeof err.response?.data?.detail == 'string'? err.response.data.detail
+      : 'Analysis failed'
     )
   } finally {
     setLoading(false)

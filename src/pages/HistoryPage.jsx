@@ -6,6 +6,7 @@ import ErrorMessage from '../components/common/ErrorMessage.jsx'
 import { formatDate } from '../utils/formatDate.js'
 import { ROUTES } from '../utils/constants.js'
 import { getHistoryApi } from '../api/analysisApi.js'
+import {fetchPatients} from '../api/patientApi'
 
 const BORDER = '#d1e3f8'
 const PRIMARY = '#2a7fd4'
@@ -18,22 +19,37 @@ export default function HistoryPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [items, setItems] = useState([])
+  const [patients, setPatients] = useState([])
+  const [selectedPatient, setSelectedPatient] = useState("")
 
-  useEffect(()=> {
-    async function loadHistory() {
-      try {
-        const data = await getHistoryApi()
-        setItems(data)
-      }catch(err) {
-        console.error(err)
-        setError('Failed to load history')
-      }finally {
-        setLoading(false)
-      }
-    }
+  useEffect(() => {
+  loadPatients()
+}, [])
 
-    loadHistory()
-  }, [])
+async function loadPatients() {
+  try {
+    const data = await fetchPatients()
+    setPatients(data)
+  } catch (err) {
+    console.error(err)
+    setError('Failed to load patients')
+  }
+}
+
+async function loadHistory(patientId) {
+  try {
+    setLoading(true)
+
+    const data = await getHistoryApi(patientId)
+
+    setItems(data)
+  } catch (err) {
+    console.error(err)
+    setError('Failed to load history')
+  } finally {
+    setLoading(false)
+  }
+}
 
   const cardStyle = {
     backgroundColor: '#ffffff',
@@ -62,6 +78,30 @@ export default function HistoryPage() {
       </header>
 
       <ErrorMessage message={error} />
+
+      <div style={{ marginBottom: '20px' }}>
+  <select
+    value={selectedPatient}
+    onChange={(e) => {
+      setSelectedPatient(e.target.value)
+      loadHistory(e.target.value)
+    }}
+    style={{
+      width: '100%',
+      padding: '12px',
+      borderRadius: '8px',
+      border: '1px solid #ccc',
+    }}
+  >
+    <option value="">Choose patient</option>
+
+    {patients.map((patient) => (
+      <option key={patient.id} value={patient.id}>
+        {patient.name} ({patient.patient_id})
+      </option>
+    ))}
+  </select>
+</div>
 
       {loading ? (
         <LoadingSpinner />
