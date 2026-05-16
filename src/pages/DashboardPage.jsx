@@ -69,6 +69,66 @@ export default function DashboardPage() {
     </span>
   </div>
 </div>
+<div
+  style={{
+    background: "white",
+    borderRadius: "24px",
+    padding: "40px",
+    marginBottom: "40px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+  }}
+>
+  <div>
+    <h1
+      style={{
+        fontSize: "40px",
+        marginBottom: "15px",
+        color: "#1e293b",
+      }}
+    >
+      Welcome back, Doctor
+    </h1>
+
+    <p
+      style={{
+        color: "#64748b",
+        maxWidth: "500px",
+        lineHeight: "1.6",
+      }}
+    >
+      Monitor patient records and manage AI-powered
+      breast cancer analyses efficiently and securely.
+    </p>
+
+    <button
+      onClick={() => navigate("/predict")}
+      style={{
+        marginTop: "25px",
+        background: "#2563eb",
+        color: "white",
+        border: "none",
+        padding: "14px 22px",
+        borderRadius: "12px",
+        cursor: "pointer",
+        fontSize: "16px",
+      }}
+    >
+      Start Analysis
+    </button>
+  </div>
+
+  <img
+    src="/medical-ai.svg"
+    alt="Medical AI"
+    style={{
+      width: "280px",
+    }}
+  />
+</div>
+
       <div
         style={{
           display: "grid",
