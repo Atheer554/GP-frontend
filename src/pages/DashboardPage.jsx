@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { FaUserInjured } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
-import medicalImage from "../assets/Breast cancer awareness-caute.svg";
+import medicalImage from "../assets/medical-ai.svg";
 
 export default function DashboardPage() {
   const navigate = useNavigate()
@@ -126,7 +126,7 @@ export default function DashboardPage() {
   </div>
 
   <img
-    src="/assets/Breast cancer awareness-caute.svg"
+    src={medicalImage}
     alt="Medical AI"
     style={{
       width: "280px",
