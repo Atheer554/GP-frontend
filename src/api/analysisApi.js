@@ -4,12 +4,12 @@ import { ROUTES } from '../utils/constants'
 export async function predictApi(file, patientId) {
   const formData = new FormData()
 
-  formData.append('file', file)
-  formData.append('patient_id', patientId)
+  formData.append("file", file)
+  formData.append("patient_id", patientId)
 
   const response = await client.post(
-    ROUTES.predict,
-    formData,
+    "/predict",
+    formData
     
   )
 

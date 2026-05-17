@@ -16,7 +16,7 @@ const CARD_SHADOW = '0 2px 12px rgba(26, 26, 46, 0.08)'
 
 
 export default function HistoryPage() {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [items, setItems] = useState([])
   const [patients, setPatients] = useState([])

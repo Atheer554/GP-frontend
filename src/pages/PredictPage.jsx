@@ -86,6 +86,9 @@ export default function PredictPage() {
     setLoading(true)
     setError('')
 
+    console.log(file)
+    console.log(selectedPatient)
+
     const response = await predictApi(file, selectedPatient)
 
     console.log(response)

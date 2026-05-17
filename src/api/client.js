@@ -4,9 +4,6 @@ import { getToken } from '../auth/token'
 
 const client = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 })
 
 client.interceptors.request.use((config) => {
