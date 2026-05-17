@@ -92,7 +92,7 @@ export default function PredictPage() {
 )
     console.log(response)
 
-    setResult(response.analysis)
+    setResult(response)
   } catch (err) {
     console.error(err)
 
@@ -478,7 +478,7 @@ export default function PredictPage() {
           borderRadius: "14px",
 
           background:
-            result.prediction === "malignant"
+            result?.prediction === "malignant"
               ? "linear-gradient(to bottom right, #dc2626, #ef4444)"
               : "linear-gradient(to bottom right, #16a34a, #22c55e)",
 
@@ -491,7 +491,7 @@ export default function PredictPage() {
           fontSize: "22px",
         }}
       >
-        {result.prediction === "malignant"
+        {result?.prediction === "malignant"
           ? "⚠"
           : "✓"}
       </div>
@@ -531,12 +531,12 @@ export default function PredictPage() {
           borderRadius: "999px",
 
           backgroundColor:
-            result.prediction === "malignant"
+            result?.prediction === "malignant"
               ? "#fee2e2"
               : "#dcfce7",
 
           color:
-            result.prediction === "malignant"
+            result?.prediction === "malignant"
               ? "#b91c1c"
               : "#166534",
 
@@ -545,7 +545,7 @@ export default function PredictPage() {
           fontSize: "14px",
         }}
       >
-        {result.prediction === "malignant"
+        {result?.prediction === "malignant"
           ? "Tumor Detected"
           : "No Tumor Detected"}
       </div>
@@ -577,7 +577,7 @@ export default function PredictPage() {
           textTransform: "capitalize",
         }}
       >
-        {result.prediction}
+        {result?.prediction}
       </h3>
     </div>
   </div>
