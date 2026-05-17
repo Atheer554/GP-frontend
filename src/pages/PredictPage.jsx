@@ -74,8 +74,7 @@ export default function PredictPage() {
   const handleBrowseClick = () => {
     inputRef.current?.click()
   }
-
- const handleAnalyze = async () => {
+const handleAnalyze = async () => {
   if (!file) return
 
   if (!selectedPatient) {
@@ -94,7 +93,8 @@ export default function PredictPage() {
 
     console.log(response)
 
-    setResult(response)
+    // IMPORTANT FIX
+    setResult(response.analysis)
 
   } catch (err) {
     console.error(err)
@@ -105,16 +105,15 @@ export default function PredictPage() {
     )
 
     setError(
-  JSON.stringify(
-    err.response?.data
-  )
-)
+      JSON.stringify(
+        err.response?.data
+      )
+    )
 
   } finally {
     setLoading(false)
   }
 }
-
   const cardBase = {
     backgroundColor: '#ffffff',
     borderRadius: '10px',
@@ -452,7 +451,7 @@ export default function PredictPage() {
 {/**/}
       {loading ? <LoadingSpinner /> : null}
 
-     {result ? (
+    {result ? (
   <div
     style={{
       marginTop: "35px",
@@ -488,7 +487,7 @@ export default function PredictPage() {
           borderRadius: "14px",
 
           background:
-            result?.prediction === "malignant"
+            result?.has_tumor
               ? "linear-gradient(to bottom right, #dc2626, #ef4444)"
               : "linear-gradient(to bottom right, #16a34a, #22c55e)",
 
@@ -501,7 +500,7 @@ export default function PredictPage() {
           fontSize: "22px",
         }}
       >
-        {result?.prediction === "malignant"
+        {result?.has_tumor
           ? "⚠"
           : "✓"}
       </div>
@@ -541,12 +540,12 @@ export default function PredictPage() {
           borderRadius: "999px",
 
           backgroundColor:
-            result?.prediction === "malignant"
+            result?.has_tumor
               ? "#fee2e2"
               : "#dcfce7",
 
           color:
-            result?.prediction === "malignant"
+            result?.has_tumor
               ? "#b91c1c"
               : "#166534",
 
@@ -555,7 +554,7 @@ export default function PredictPage() {
           fontSize: "14px",
         }}
       >
-        {result?.prediction === "malignant"
+        {result?.has_tumor
           ? "Tumor Detected"
           : "No Tumor Detected"}
       </div>
@@ -587,9 +586,37 @@ export default function PredictPage() {
           textTransform: "capitalize",
         }}
       >
-        {result?.prediction}
+        {result?.tumor_type || "—"}
       </h3>
     </div>
+
+    {result?.mask_path && (
+      <div
+        style={{
+          marginTop: "20px",
+        }}
+      >
+        <p
+          style={{
+            marginBottom: "10px",
+            color: "#64748b",
+            fontSize: "14px",
+          }}
+        >
+          Segmentation Mask
+        </p>
+
+        <img
+          src={result.mask_path}
+          alt="Segmentation mask"
+          style={{
+            width: "100%",
+            borderRadius: "16px",
+            border: "1px solid #dbeafe",
+          }}
+        />
+      </div>
+    )}
   </div>
 ) : null}
    
