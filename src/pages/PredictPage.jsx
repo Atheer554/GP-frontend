@@ -74,7 +74,7 @@ export default function PredictPage() {
     inputRef.current?.click()
   }
 
-  const handleAnalyze = async () => {
+ const handleAnalyze = async () => {
   if (!file) return
 
   if (!selectedPatient) {
@@ -87,26 +87,31 @@ export default function PredictPage() {
     setError('')
 
     const response = await predictApi(
-  file,
-  selectedPatient
-)
+      file,
+      selectedPatient
+    )
+
     console.log(response)
 
     setResult(response)
-   } catch (err) {
-  console.error(err)
 
-  console.log(
-    "BACKEND ERROR:",
-    err.response?.data
-  )
+  } catch (err) {
+    console.error(err)
 
-  setError(
-    JSON.stringify(
+    console.log(
+      "BACKEND ERROR:",
       err.response?.data
     )
-  )
-}
+
+    setError(
+      JSON.stringify(
+        err.response?.data
+      )
+    )
+
+  } finally {
+    setLoading(false)
+  }
 
   const cardBase = {
     backgroundColor: '#ffffff',
