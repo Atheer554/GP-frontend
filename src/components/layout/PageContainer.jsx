@@ -1,6 +1,7 @@
 import Navbar from './Navbar.jsx'
 
-export default function PageContainer({ children }) {
+export default function PageContainer({ children,
+  showNavbar = true, }) {
   return (
     <div
       style={{
@@ -8,7 +9,7 @@ export default function PageContainer({ children }) {
         backgroundColor: '#f0f6ff',
       }}
     >
-      <Navbar />
+   {showNavbar && <Navbar />}
       <div
         style={{
           maxWidth: '900px',

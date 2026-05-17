@@ -1,152 +1,404 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+
+import { Link, useParams } from 'react-router-dom'
+
+import {
+  FaArrowLeft,
+  FaRegCalendarAlt,
+  FaFileMedical,
+  FaBrain,
+} from 'react-icons/fa'
+
 import PageContainer from '../components/layout/PageContainer.jsx'
 import LoadingSpinner from '../components/common/LoadingSpinner.jsx'
 import ErrorMessage from '../components/common/ErrorMessage.jsx'
+
 import { formatDate } from '../utils/formatDate.js'
 import { ROUTES } from '../utils/constants.js'
-import { useParams } from 'react-router-dom'
-import {getAnalysisDetailsApi} from '../api/analysisApi.js'
 
-const BORDER = '#d1e3f8'
-const PRIMARY = '#2a7fd4'
-const TITLE_COLOR = '#1a1a2e'
-const CARD_SHADOW = '0 2px 12px rgba(26, 26, 46, 0.08)'
+import { getAnalysisDetailsApi } from '../api/analysisApi.js'
 
-
+const BORDER = '#e2e8f0'
 
 export default function AnalysisDetailsPage() {
   const [loading, setLoading] = useState(true)
+
   const [error, setError] = useState('')
-  const [analysis, setAnalysis] = useState(null)
-  const {id} = useParams()
+
+  const [analysis, setAnalysis] =
+    useState(null)
+
+  const { id } = useParams()
 
   useEffect(() => {
-   async function loadAnalysis() {
-     try {
-      const data = await getAnalysisDetailsApi(id)
-      setAnalysis(data)
-     }catch (err) {
-      console.error(err)
-      setError('Failed to load analysis')
-     }finally {
-      setLoading(false)
-     }
-   }
+    async function loadAnalysis() {
+      try {
+        const data =
+          await getAnalysisDetailsApi(id)
 
-   loadAnalysis()
-}, [id])
+        console.log(data)
 
-  if (!analysis) {
+        setAnalysis(data)
+      } catch (err) {
+        console.error(err)
+
+        setError(
+          'Failed to load analysis'
+        )
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadAnalysis()
+  }, [id])
+
+  if (!analysis && !loading) {
     return (
       <PageContainer>
-        <h2>No analysis selected</h2>
+        <div
+          style={{
+            padding: '40px',
+
+            fontFamily:
+              "'Inter', 'Segoe UI', sans-serif",
+          }}
+        >
+          <h2>No analysis selected</h2>
+        </div>
       </PageContainer>
     )
   }
+
   return (
     <PageContainer>
-      <Link
-        to={ROUTES.history}
+      <div
         style={{
-          display: 'inline-block',
-          marginBottom: '16px',
-          color: PRIMARY,
-          textDecoration: 'none',
-          fontWeight: 600,
-          fontSize: '14px',
+          minHeight: '100vh',
+
+          background:
+            'linear-gradient(to bottom, #f8fbff, #eef5ff)',
+
+          padding: '40px',
+
+          fontFamily:
+            "'Inter', 'Segoe UI', sans-serif",
         }}
       >
-        ← Back to History
-      </Link>
-
-      <h1
-        style={{
-          margin: '0 0 24px',
-          fontSize: '26px',
-          fontWeight: 700,
-          color: TITLE_COLOR,
-        }}
-      >
-        Analysis Details
-      </h1>
-
-      <ErrorMessage message={error} />
-
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <section
+        {/* BACK BUTTON */}
+        <Link
+          to={ROUTES.history}
           style={{
-            marginTop: error ? '16px' : 0,
-            backgroundColor: '#ffffff',
-            borderRadius: '10px',
-            boxShadow: CARD_SHADOW,
-            border: `1px solid ${BORDER}`,
-            padding: '20px',
+            display: 'inline-flex',
+
+            alignItems: 'center',
+
+            gap: '10px',
+
+            marginBottom: '24px',
+
+            color: '#2563eb',
+
+            textDecoration: 'none',
+
+            fontWeight: '700',
+
+            background: '#eff6ff',
+
+            padding: '12px 18px',
+
+            borderRadius: '16px',
           }}
         >
-          <div style={{ marginBottom: '14px' }}>
-            <span style={{ fontSize: '13px', color: '#6b7280', display: 'block', marginBottom: '6px' }}>
-              Date
-            </span>
-            <span style={{ fontSize: '15px', color: TITLE_COLOR }}>{formatDate(analysis.date)}</span>
-          </div>
+          <FaArrowLeft />
 
-          <div style={{ marginBottom: '14px' }}>
-            <span style={{ fontSize: '13px', color: '#6b7280', display: 'block', marginBottom: '6px' }}>
-              Filename
-            </span>
-            <span style={{ fontSize: '15px', color: TITLE_COLOR }}>{analysis.image}</span>
-          </div>
+          Back to History
+        </Link>
 
-          <div style={{ marginBottom: '14px' }}>
-            <span style={{ fontSize: '13px', color: '#6b7280', display: 'block', marginBottom: '6px' }}>
-              Status
-            </span>
-            <span
+        {/* HEADER */}
+        <div
+          style={{
+            background:
+              'linear-gradient(135deg, #ffffff, #f8fbff)',
+
+            borderRadius: '32px',
+
+            padding: '36px',
+
+            marginBottom: '28px',
+
+            border: `1px solid ${BORDER}`,
+
+            boxShadow:
+              '0 12px 30px rgba(15, 23, 42, 0.06)',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+
+              alignItems: 'center',
+
+              gap: '18px',
+            }}
+          >
+            <div
               style={{
-                display: 'inline-block',
-                padding: '6px 12px',
-                borderRadius: '999px',
-                fontSize: '12px',
-                fontWeight: 700,
-                color: '#ffffff',
-                backgroundColor: analysis.has_tumor ? '#dc2626' : '#16a34a',
+                width: '64px',
+
+                height: '64px',
+
+                borderRadius: '20px',
+
+                background:
+                  'linear-gradient(135deg, #dbeafe, #eff6ff)',
+
+                display: 'flex',
+
+                alignItems: 'center',
+
+                justifyContent: 'center',
+
+                color: '#2563eb',
+
+                fontSize: '24px',
               }}
             >
-              {analysis.has_tumor ? 'Tumor detected' : 'No tumor indicated'}
-            </span>
-          </div>
+              <FaBrain />
+            </div>
 
-          <div style={{ marginBottom: '14px' }}>
-            <span style={{ fontSize: '13px', color: '#6b7280', display: 'block', marginBottom: '6px' }}>
-              Tumor type
-            </span>
-            <span style={{ fontSize: '15px', color: TITLE_COLOR }}>{analysis.tumor_type || '—'}</span>
-          </div>
-
-          <div>
-            <span style={{ fontSize: '13px', color: '#6b7280', display: 'block', marginBottom: '8px' }}>
-              Mask
-            </span>
-            {analysis.mask_path ? (
-              <img
-                src={analysis.mask_path}
-                alt="Segmentation mask"
+            <div>
+              <h1
                 style={{
-                  width: '100%',
-                  maxWidth: '700px',
-                  borderRadius: '8px',
-                  border: `1px solid ${BORDER}`,
+                  margin: 0,
+
+                  fontSize: '40px',
+
+                  fontWeight: '800',
+
+                  letterSpacing: '-1px',
+
+                  color: '#0f172a',
                 }}
-              />
-            ) : (
-              <span style={{ fontSize: '15px', color: '#9ca3af' }}>No mask image</span>
-            )}
+              >
+                Analysis Details
+              </h1>
+
+              <p
+                style={{
+                  marginTop: '10px',
+
+                  marginBottom: 0,
+
+                  color: '#64748b',
+
+                  fontSize: '16px',
+                }}
+              >
+                AI breast cancer analysis
+                overview
+              </p>
+            </div>
           </div>
-        </section>
-      )}
+        </div>
+
+        <ErrorMessage message={error} />
+
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <div
+            style={{
+              background:
+                'linear-gradient(135deg, #ffffff, #f9fbff)',
+
+              borderRadius: '32px',
+
+              padding: '34px',
+
+              border: `1px solid ${BORDER}`,
+
+              boxShadow:
+                '0 12px 30px rgba(15, 23, 42, 0.06)',
+            }}
+          >
+            {/* DATE */}
+            <div
+              style={{
+                marginBottom: '24px',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+
+                  alignItems: 'center',
+
+                  gap: '10px',
+
+                  marginBottom: '10px',
+
+                  color: '#2563eb',
+
+                  fontWeight: '700',
+                }}
+              >
+                <FaRegCalendarAlt />
+
+                Date
+              </div>
+
+              <p
+                style={{
+                  margin: 0,
+
+                  color: '#0f172a',
+
+                  fontSize: '17px',
+                }}
+              >
+                {formatDate(
+                  analysis.date
+                )}
+              </p>
+            </div>
+
+            {/* FILE */}
+            <div
+              style={{
+                marginBottom: '24px',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+
+                  alignItems: 'center',
+
+                  gap: '10px',
+
+                  marginBottom: '10px',
+
+                  color: '#2563eb',
+
+                  fontWeight: '700',
+                }}
+              >
+                <FaFileMedical />
+
+                Analysis File
+              </div>
+
+              <p
+                style={{
+                  margin: 0,
+
+                  color: '#0f172a',
+
+                  fontSize: '17px',
+                }}
+              >
+                {analysis.image}
+              </p>
+            </div>
+
+            {/* RESULT */}
+            <div
+              style={{
+                marginBottom: '24px',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+
+                  alignItems: 'center',
+
+                  gap: '10px',
+
+                  marginBottom: '14px',
+
+                  color: '#2563eb',
+
+                  fontWeight: '700',
+                }}
+              >
+                <FaBrain />
+
+                AI Result
+              </div>
+
+              <div
+                style={{
+                  display: 'inline-flex',
+
+                  alignItems: 'center',
+
+                  padding: '12px 20px',
+
+                  borderRadius: '999px',
+
+                  background:
+                    analysis.has_tumor
+                      ? '#fee2e2'
+                      : '#dcfce7',
+
+                  color:
+                    analysis.has_tumor
+                      ? '#b91c1c'
+                      : '#15803d',
+
+                  fontWeight: '700',
+
+                  fontSize: '15px',
+                }}
+              >
+                {analysis.has_tumor
+                  ? 'Tumor Detected'
+                  : 'No Tumor Detected'}
+              </div>
+            </div>
+
+            {/* TUMOR TYPE */}
+            <div>
+              <div
+                style={{
+                  display: 'flex',
+
+                  alignItems: 'center',
+
+                  gap: '10px',
+
+                  marginBottom: '10px',
+
+                  color: '#2563eb',
+
+                  fontWeight: '700',
+                }}
+              >
+                <FaBrain />
+
+                Tumor Type
+              </div>
+
+              <p
+                style={{
+                  margin: 0,
+
+                  color: '#0f172a',
+
+                  fontSize: '18px',
+
+                  fontWeight: '600',
+                }}
+              >
+                {analysis.tumor_type ||
+                  'Unknown'}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </PageContainer>
   )
 }
