@@ -93,16 +93,19 @@ export default function PredictPage() {
     console.log(response)
 
     setResult(response)
-  } catch (err) {
-    console.error(err)
+   } catch (err) {
+  console.error(err)
 
-    setError(
-      err.response?.data?.detail ||
-      'Analysis failed'
+  console.log(
+    "BACKEND ERROR:",
+    err.response?.data
+  )
+
+  setError(
+    JSON.stringify(
+      err.response?.data
     )
-  } finally {
-    setLoading(false)
-  }
+  )
 }
 
   const cardBase = {
