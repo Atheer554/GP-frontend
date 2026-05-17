@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import PageContainer from '../components/layout/PageContainer.jsx'
 import LoadingSpinner from '../components/common/LoadingSpinner.jsx'
 import ErrorMessage from '../components/common/ErrorMessage.jsx'
+import {predictApi} from '../api/analysisApi.js'
 
 import {fetchPatients} from '../api/patientApi'
 import client from '../api/client'
