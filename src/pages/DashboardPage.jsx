@@ -2,12 +2,17 @@ import { useNavigate } from "react-router-dom"
 import { FaUserInjured } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
 import medicalImage from "../assets/medical-ai.svg";
-import logo from "../assets/logo.png";
+
+import Navbar from "../components/layout/Navbar.jsx";
 
 export default function DashboardPage() {
   const navigate = useNavigate()
 
   return (
+    <>
+     <Navbar />
+    
+    
     <div
       style={{
         minHeight: "140px",
@@ -16,140 +21,7 @@ export default function DashboardPage() {
         fontFamily: "Inter, sans-serif",
       }}
     >
-      <div
-  style={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "20px 30px",
-    background: "white",
-    borderRadius: "18px",
-    marginBottom: "40px",
-    boxShadow:  "0 8px 24px rgba(15, 23, 42, 0.06)",
-    border: "1px solid #e2e8f0",
-  }}
->
-  <div
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: "14px",
-  }}
->
-  <img
-    src={logo}
-    alt="ELPIS AI Logo"
-    style={{
-      width: "55px",
-      height: "55px",
-      objectFit: "contain",
-    }}
-  />
-
-  <div>
-    <h1
-      style={{
-        margin: 0,
-        color: "#0f172a",
-        fontSize: "28px",
-      }}
-    >
-      ELPIS AI
-    </h1>
-
-    <p
-      style={{
-        color: "#475569",
-        marginTop: "5px",
-      }}
-    >
-      Breast Cancer Detection System
-    </p>
-  </div>
-</div>
-
-  <div
-    style={{
-      display: "flex",
-      gap: "25px",
-      alignItems: "center",
-    }}
-  >
-    <span
-  style={{
-    cursor: "pointer",
-    transition: "0.2s ease",
-    color: "#0f172a",
-  }}
-
-  onMouseEnter={(e) => {
-    e.currentTarget.style.color = "#2563eb";
-  }}
-
-  onMouseLeave={(e) => {
-    e.currentTarget.style.color = "#0f172a";
-  }}
->
-  Home
-</span>
-
-    <span
-  style={{
-    cursor: "pointer",
-    transition: "0.2s ease",
-    color: "#0f172a",
-  }}
-
-  onClick={() => navigate("/patients")}
-
-  onMouseEnter={(e) => {
-    e.currentTarget.style.color = "#2563eb";
-  }}
-
-  onMouseLeave={(e) => {
-    e.currentTarget.style.color = "#0f172a";
-  }}
->
-  Patients
-</span>
-
-   <span
-  style={{
-    cursor: "pointer",
-    transition: "0.2s ease",
-    color: "#0f172a",
-  }}
-
-  onMouseEnter={(e) => {
-    e.currentTarget.style.color = "#2563eb";
-  }}
-
-  onMouseLeave={(e) => {
-    e.currentTarget.style.color = "#0f172a";
-  }}
->
-  History
-</span>
-
-   <span
-  style={{
-    cursor: "pointer",
-    transition: "0.2s ease",
-    color: "#dc2626",
-  }}
-
-  onMouseEnter={(e) => {
-    e.currentTarget.style.opacity = "0.7";
-  }}
-
-  onMouseLeave={(e) => {
-    e.currentTarget.style.opacity = "1";
-  }}
->
-  Logout
-</span>
-  </div>
-</div>
+     
 <div
   style={{
     background: "linear-gradient(to right, #ffffff, #f8fbff)",
@@ -292,4 +164,7 @@ export default function DashboardPage() {
 
   <p>Create a new breast cancer analysis</p>
 </div>
-</div>)}
+</div>
+  </>
+)
+}
