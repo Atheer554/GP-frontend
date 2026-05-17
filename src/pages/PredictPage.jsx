@@ -104,14 +104,15 @@ export default function PredictPage() {
     )
 
     setError(
-      JSON.stringify(
-        err.response?.data
-      )
-    )
+  JSON.stringify(
+    err.response?.data
+  )
+)
 
   } finally {
     setLoading(false)
   }
+}
 
   const cardBase = {
     backgroundColor: '#ffffff',
@@ -595,4 +596,4 @@ export default function PredictPage() {
      
    
   )}
-}
+
