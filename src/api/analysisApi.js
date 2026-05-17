@@ -4,7 +4,7 @@ import { ROUTES } from '../utils/constants'
 export async function predictApi(file,patientId) {
   const formData = new FormData()
 
-  formData.append('image', file)
+  formData.append('file', file)
   formData.append(
   'patient_id',
   patientId
