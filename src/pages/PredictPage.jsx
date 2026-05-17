@@ -589,5 +589,5 @@ export default function PredictPage() {
     </PageContainer>
      
    
-  )
+  )}
 }
