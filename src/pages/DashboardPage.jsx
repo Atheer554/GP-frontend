@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { FaUserInjured } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
 import medicalImage from "../assets/medical-ai.svg";
+import logo from "../assets/logo.png";
 
 export default function DashboardPage() {
   const navigate = useNavigate()
@@ -28,6 +29,23 @@ export default function DashboardPage() {
     border: "1px solid #e2e8f0",
   }}
 >
+  <div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "14px",
+  }}
+>
+  <img
+    src={logo}
+    alt="ELPIS AI Logo"
+    style={{
+      width: "55px",
+      height: "55px",
+      objectFit: "contain",
+    }}
+  />
+
   <div>
     <h1
       style={{
@@ -48,6 +66,7 @@ export default function DashboardPage() {
       Breast Cancer Detection System
     </p>
   </div>
+</div>
 
   <div
     style={{

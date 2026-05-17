@@ -1,135 +1,255 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
 import PageContainer from '../components/layout/PageContainer.jsx'
 import ErrorMessage from '../components/common/ErrorMessage.jsx'
 import LoadingSpinner from '../components/common/LoadingSpinner.jsx'
-import { ROUTES } from '../utils/constants.js'
-import {loginApi} from '../api/authApi.js'
 
-const BORDER = '#d1e3f8'
-const PRIMARY = '#2a7fd4'
-const TITLE_COLOR = '#1a1a2e'
+import { ROUTES } from '../utils/constants.js'
+import { loginApi } from '../api/authApi.js'
+
+import logo from '../assets/logo.png'
+
+const BORDER = '#dbe3ee'
+const PRIMARY = '#2563eb'
+const TITLE_COLOR = '#0f172a'
 
 export default function LoginPage() {
   const navigate = useNavigate()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
   const [loading] = useState(false)
   const [error] = useState('')
 
   const handleSubmit = async (e) => {
-  e.preventDefault()
+    e.preventDefault()
 
-  try {
-    const result = await loginApi({
-      email,
-      password,
-    })
+    try {
+      const result = await loginApi({
+        email,
+        password,
+      })
 
-    console.log(result)
+      console.log(result)
 
-    localStorage.setItem('token', result.access_token)
+      localStorage.setItem('token', result.access_token)
 
-    navigate('/dashboard')
-  } catch (err) {
-    console.error(err)
-    alert('Login failed')
+      navigate('/dashboard')
+    } catch (err) {
+      console.error(err)
+      alert('Login failed')
+    }
   }
-}
 
   return (
-    <PageContainer>
+   <PageContainer showNavbar={false}>
       <div
         style={{
-          backgroundColor: '#ffffff',
-          borderRadius: '8px',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
-          maxWidth: '420px',
-          margin: '20px auto 0',
+          minHeight: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           padding: '40px',
+          fontFamily: 'Inter, sans-serif',
         }}
       >
-        <h1
+        <div
           style={{
-            margin: '0 0 8px',
-            fontSize: '28px',
-            fontWeight: 700,
-            color: TITLE_COLOR,
-            textAlign: 'center',
+            backgroundColor: '#ffffff',
+
+            borderRadius: '28px',
+
+            border: '1px solid #e2e8f0',
+
+            boxShadow: '0 8px 24px rgba(15, 23, 42, 0.06)',
+
+            width: '100%',
+            maxWidth: '460px',
+
+            padding: '45px',
           }}
         >
-          Welcome Back
-        </h1>
-        <p style={{ margin: '0 0 24px', color: '#4b5563', textAlign: 'center' }}>
-          Sign in to your account
-        </p>
-
-        <ErrorMessage message={error} />
-
-        <form onSubmit={handleSubmit} style={{ marginTop: error ? '12px' : 0 }}>
-          <div style={{ marginBottom: '14px' }}>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{
-                width: '100%',
-                border: `1px solid ${BORDER}`,
-                borderRadius: '6px',
-                padding: '10px 12px',
-                boxSizing: 'border-box',
-                fontSize: '15px',
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '16px' }}>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{
-                width: '100%',
-                border: `1px solid ${BORDER}`,
-                borderRadius: '6px',
-                padding: '10px 12px',
-                boxSizing: 'border-box',
-                fontSize: '15px',
-              }}
-            />
-          </div>
-
-          <button
-            type="submit"
+          {/* LOGO */}
+          <div
             style={{
-              width: '100%',
-              backgroundColor: PRIMARY,
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '11px 12px',
-              fontSize: '15px',
-              fontWeight: 600,
-              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '18px',
             }}
           >
-            Sign In
-          </button>
-        </form>
+            <img
+              src={logo}
+              alt="ELPIS AI Logo"
+              style={{
+                width: '90px',
+                objectFit: 'contain',
+              }}
+            />
+          </div>
 
-        {loading ? <LoadingSpinner /> : null}
-
-        <p style={{ margin: '20px 0 0', textAlign: 'center', color: '#4b5563' }}>
-          <Link
-            to={ROUTES.register}
-            style={{ color: PRIMARY, textDecoration: 'none', fontWeight: 600 }}
+          {/* BRAND */}
+          <h2
+            style={{
+              textAlign: 'center',
+              marginBottom: '8px',
+              color: PRIMARY,
+              fontWeight: '700',
+              fontSize: '18px',
+              letterSpacing: '1px',
+            }}
           >
-            Don't have an account? Register
-          </Link>
-        </p>
+            ELPIS AI
+          </h2>
+
+          {/* TITLE */}
+          <h1
+            style={{
+              margin: '0 0 10px',
+              fontSize: '34px',
+              fontWeight: 700,
+              color: TITLE_COLOR,
+              textAlign: 'center',
+            }}
+          >
+            Welcome Back
+          </h1>
+
+          {/* SUBTITLE */}
+          <p
+            style={{
+              margin: '0 0 30px',
+              color: '#475569',
+              textAlign: 'center',
+              lineHeight: '1.6',
+            }}
+          >
+            Sign in to access the breast cancer
+            detection dashboard.
+          </p>
+
+          <ErrorMessage message={error} />
+
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              marginTop: error ? '12px' : 0,
+            }}
+          >
+            {/* EMAIL */}
+            <div style={{ marginBottom: '16px' }}>
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={{
+                  width: '100%',
+
+                  border: `1px solid ${BORDER}`,
+
+                  borderRadius: '14px',
+
+                  padding: '14px 16px',
+
+                  boxSizing: 'border-box',
+
+                  fontSize: '15px',
+
+                  backgroundColor: '#f8fafc',
+
+                  transition: '0.2s ease',
+
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            {/* PASSWORD */}
+            <div style={{ marginBottom: '22px' }}>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{
+                  width: '100%',
+
+                  border: `1px solid ${BORDER}`,
+
+                  borderRadius: '14px',
+
+                  padding: '14px 16px',
+
+                  boxSizing: 'border-box',
+
+                  fontSize: '15px',
+
+                  backgroundColor: '#f8fafc',
+
+                  transition: '0.2s ease',
+
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            {/* BUTTON */}
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+
+                backgroundColor: PRIMARY,
+
+                color: '#ffffff',
+
+                border: 'none',
+
+                borderRadius: '14px',
+
+                padding: '14px 16px',
+
+                fontSize: '15px',
+
+                fontWeight: 600,
+
+                cursor: 'pointer',
+
+                boxShadow:
+                  '0 4px 14px rgba(37, 99, 235, 0.25)',
+
+                transition: '0.2s ease',
+              }}
+            >
+              Sign In
+            </button>
+          </form>
+
+          {loading ? <LoadingSpinner /> : null}
+
+          {/* REGISTER */}
+          <p
+            style={{
+              margin: '24px 0 0',
+              textAlign: 'center',
+              color: '#475569',
+            }}
+          >
+            <Link
+              to={ROUTES.register}
+              style={{
+                color: PRIMARY,
+                textDecoration: 'none',
+                fontWeight: 600,
+              }}
+            >
+              Don&apos;t have an account? Register
+            </Link>
+          </p>
+        </div>
       </div>
     </PageContainer>
-  )
+  );
 }

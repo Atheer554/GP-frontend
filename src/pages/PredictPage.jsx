@@ -106,182 +106,478 @@ export default function PredictPage() {
 
   return (
     <PageContainer>
-      <header style={{ marginBottom: '28px' }}>
+      <header style={{ marginBottom: '35px' }}>
         <h1
           style={{
             margin: '0 0 8px',
-            fontSize: '26px',
+            fontSize: '40px',
             fontWeight: 700,
             color: TITLE_COLOR,
           }}
         >
           Breast Cancer Detection
         </h1>
-        <p style={{ margin: 0, fontSize: '16px', color: '#4b5563' }}>
-          Upload an ultrasound image to analyze
-        </p>
+        <p
+  style={{
+    margin: 0,
+
+    fontSize: '17px',
+
+    color: '#475569',
+
+    maxWidth: '700px',
+
+    lineHeight: '1.7',
+  }}
+>
+  Upload ultrasound scans and let the AI model
+  assist in breast cancer detection and analysis.
+</p>
       </header>
+{/**/}
+
+
 
       <ErrorMessage message={error} />
+      <ErrorMessage message={error} />
 
-      <div style={{ marginBottom: "20px" }}>
-  <label
+<div
+  style={{
+    background:
+      "linear-gradient(to right, #ffffff, #f8fbff)",
+
+    borderRadius: "32px",
+
+    padding: "45px",
+
+    border: "1px solid #e2e8f0",
+
+    boxShadow:
+      "0 10px 30px rgba(15, 23, 42, 0.06)",
+
+    display: "flex",
+
+    justifyContent: "space-between",
+
+    alignItems: "center",
+
+    gap: "50px",
+
+    marginTop: "30px",
+  }}
+>
+  {/* LEFT SIDE */}
+  <div
     style={{
-      display: "block",
-      marginBottom: "8px",
-      fontWeight: "600",
+      flex: 1,
     }}
   >
-    Select Patient
-  </label>
-
-  <select
-    value={selectedPatient}
-    onChange={(e) => setSelectedPatient(e.target.value)}
-    style={{
-      width: "100%",
-      padding: "12px",
-      borderRadius: "8px",
-      border: "1px solid #ccc",
-    }}
-  >
-    <option value="">Choose patient</option>
-
-    {patients.map((patient) => (
-      <option key={patient.id} value={patient.id}>
-        {patient.name} ({patient.patient_id})
-      </option>
-    ))}
-  </select>
-</div>
-
+    {/* TITLE */}
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "14px",
+        marginBottom: "18px",
+      }}
+    >
       <div
-        role="button"
-        tabIndex={0}
-        onClick={handleBrowseClick}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            handleBrowseClick()
-          }
-        }}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
         style={{
-          ...cardBase,
-          marginTop: error ? '16px' : 0,
-          border: `2px dashed ${BORDER}`,
-          padding: '36px 20px',
-          textAlign: 'center',
-          cursor: 'pointer',
-          outline: 'none',
+          width: "55px",
+          height: "55px",
+          borderRadius: "16px",
+          background:
+            "linear-gradient(to bottom right, #2563eb, #60a5fa)",
+
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+
+          color: "white",
+
+          fontSize: "24px",
+
+          fontWeight: "700",
         }}
       >
-        <input
-          ref={inputRef}
-          type="file"
-          accept={ACCEPT_ATTR}
-          style={{ display: 'none' }}
-          onChange={handleInputChange}
-        />
-        <p style={{ margin: '0 0 10px', fontSize: '15px', color: PRIMARY, fontWeight: 600 }}>
-          Click to upload or drag and drop
-        </p>
-        <p style={{ margin: 0, fontSize: '13px', color: '#6b7280' }}>JPG or PNG only</p>
-        {file ? (
-          <p style={{ margin: '14px 0 0', fontSize: '14px', color: TITLE_COLOR, fontWeight: 500 }}>
-            Selected: {file.name}
-          </p>
-        ) : null}
+        AI
       </div>
 
-      <button
-        type="button"
-        disabled={!file}
-        onClick={handleAnalyze}
-        style={{
-          marginTop: '18px',
-          padding: '12px 22px',
-          fontSize: '15px',
-          fontWeight: 600,
-          color: '#ffffff',
-          backgroundColor: !file ? '#93c5ec' : PRIMARY,
-          border: 'none',
-          borderRadius: '8px',
-          cursor: !file ? 'not-allowed' : 'pointer',
-          width: '100%',
-          maxWidth: '280px',
-          display: 'block',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}
-      >
-        Analyze Image
-      </button>
-
-      {loading ? <LoadingSpinner /> : null}
-
-      {result ? (
-        <section
+      <div>
+        <h2
           style={{
-            ...cardBase,
-            marginTop: '28px',
-            padding: '20px',
-            border: `1px solid ${BORDER}`,
+            margin: 0,
+            color: "#0f172a",
+            fontSize: "30px",
           }}
         >
-          <h2 style={{ margin: '0 0 16px', fontSize: '18px', color: TITLE_COLOR }}>Result</h2>
+          AI Analysis Workspace
+        </h2>
 
-          <div style={{ marginBottom: '14px' }}>
-            <span style={{ fontSize: '13px', color: '#6b7280', display: 'block', marginBottom: '6px' }}>
-              Status
-            </span>
-            <span
-              style={{
-                display: 'inline-block',
-                padding: '6px 12px',
-                borderRadius: '999px',
-                fontSize: '13px',
-                fontWeight: 700,
-                color: '#ffffff',
-                backgroundColor: result.has_tumor ? '#dc2626' : '#16a34a',
-              }}
-            >
-              {result.has_tumor ? 'Tumor detected' : 'No tumor indicated'}
-            </span>
-          </div>
+        <p
+          style={{
+            marginTop: "6px",
+            color: "#64748b",
+          }}
+        >
+          Upload ultrasound scans for
+          intelligent breast cancer detection.
+        </p>
+      </div>
+    </div>
 
-          <div style={{ marginBottom: '14px' }}>
-            <span style={{ fontSize: '13px', color: '#6b7280', display: 'block', marginBottom: '6px' }}>
-              Tumor type
-            </span>
-            <span style={{ fontSize: '15px', color: TITLE_COLOR }}>
-              {result.tumor_type != null && result.tumor_type !== ''
-                ? result.tumor_type
-                : '—'}
-            </span>
-          </div>
+    {/* SELECT */}
+    <div
+      style={{
+        marginBottom: "24px",
+      }}
+    >
+      <label
+        style={{
+          display: "block",
+          marginBottom: "10px",
+          fontWeight: "600",
+          color: "#0f172a",
+        }}
+      >
+        Select Patient
+      </label>
 
-          <div>
-            <span style={{ fontSize: '13px', color: '#6b7280', display: 'block', marginBottom: '8px' }}>
-              Mask
-            </span>
-            {result.mask_path ? (
-              <img
-                src={result.mask_path}
-                alt="Segmentation mask"
-                style={{
-                  maxWidth: '100%',
-                  borderRadius: '8px',
-                  border: `1px solid ${BORDER}`,
-                }}
-              />
-            ) : (
-              <span style={{ fontSize: '15px', color: '#9ca3af' }}>No mask image</span>
-            )}
-          </div>
-        </section>
+      <select
+        value={selectedPatient}
+        onChange={(e) =>
+          setSelectedPatient(e.target.value)
+        }
+        style={{
+          width: "100%",
+
+          padding: "15px 16px",
+
+          borderRadius: "16px",
+
+          border: "1px solid #dbe3ee",
+
+          backgroundColor: "#ffffff",
+
+          fontSize: "15px",
+
+          outline: "none",
+        }}
+      >
+        <option value="">
+          Choose patient
+        </option>
+
+        {patients.map((patient) => (
+          <option
+            key={patient.id}
+            value={patient.id}
+          >
+            {patient.name} (
+            {patient.patient_id})
+          </option>
+        ))}
+      </select>
+    </div>
+
+    {/* UPLOAD */}
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleBrowseClick}
+      onKeyDown={(e) => {
+        if (
+          e.key === "Enter" ||
+          e.key === " "
+        ) {
+          e.preventDefault()
+          handleBrowseClick()
+        }
+      }}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+      style={{
+        border:
+          "2px dashed #93c5fd",
+
+        background:
+          "linear-gradient(to bottom, #f8fbff, #ffffff)",
+
+        borderRadius: "24px",
+
+        padding: "55px 30px",
+
+        textAlign: "center",
+
+        cursor: "pointer",
+
+        transition: "0.2s ease",
+      }}
+    >
+      <input
+        ref={inputRef}
+        type="file"
+        accept={ACCEPT_ATTR}
+        style={{ display: "none" }}
+        onChange={handleInputChange}
+      />
+
+      <div
+        style={{
+          fontSize: "50px",
+          marginBottom: "12px",
+        }}
+      >
+        🩺
+      </div>
+
+      <p
+        style={{
+          margin: "0 0 10px",
+
+          fontSize: "18px",
+
+          color: PRIMARY,
+
+          fontWeight: 700,
+        }}
+      >
+        Click to upload or drag and drop
+      </p>
+
+      <p
+        style={{
+          margin: 0,
+
+          fontSize: "14px",
+
+          color: "#64748b",
+        }}
+      >
+        JPG or PNG only
+      </p>
+
+      {file ? (
+        <p
+          style={{
+            marginTop: "18px",
+
+            color: "#0f172a",
+
+            fontWeight: 600,
+          }}
+        >
+          Selected: {file.name}
+        </p>
       ) : null}
+    </div>
+
+    {/* BUTTON */}
+    <button
+      type="button"
+      disabled={!file}
+      onClick={handleAnalyze}
+      style={{
+        marginTop: "24px",
+
+        padding: "16px 22px",
+
+        fontSize: "15px",
+
+        fontWeight: 600,
+
+        color: "#ffffff",
+
+        backgroundColor: !file
+          ? "#93c5ec"
+          : PRIMARY,
+
+        border: "none",
+
+        borderRadius: "16px",
+
+        cursor: !file
+          ? "not-allowed"
+          : "pointer",
+
+        width: "100%",
+
+        boxShadow:
+          "0 4px 14px rgba(37, 99, 235, 0.25)",
+
+        transition: "0.2s ease",
+      }}
+    >
+      Analyze Image
+    </button>
+  </div>
+
+  {/* RIGHT SIDE IMAGE */}
+  <div
+    style={{
+      flex: 1,
+
+      display: "flex",
+
+      justifyContent: "center",
+    }}
+  >
+    <img
+      src="/medical-ai.svg"
+      alt="Medical AI"
+      style={{
+        width: "100%",
+        maxWidth: "420px",
+      }}
+    />
+  </div>
+</div>
+{/**/}
+      {loading ? <LoadingSpinner /> : null}
+
+     {result ? (
+  <div
+    style={{
+      marginTop: "35px",
+
+      background:
+        "linear-gradient(to right, #ffffff, #f8fbff)",
+
+      borderRadius: "24px",
+
+      padding: "30px",
+
+      border: "1px solid #dbeafe",
+
+      boxShadow:
+        "0 8px 24px rgba(15, 23, 42, 0.05)",
+
+      maxWidth: "500px",
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+        marginBottom: "20px",
+      }}
+    >
+      <div
+        style={{
+          width: "48px",
+          height: "48px",
+
+          borderRadius: "14px",
+
+          background:
+            result.prediction === "malignant"
+              ? "linear-gradient(to bottom right, #dc2626, #ef4444)"
+              : "linear-gradient(to bottom right, #16a34a, #22c55e)",
+
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+
+          color: "white",
+
+          fontSize: "22px",
+        }}
+      >
+        {result.prediction === "malignant"
+          ? "⚠"
+          : "✓"}
+      </div>
+
+      <div>
+        <h2
+          style={{
+            margin: 0,
+            color: "#0f172a",
+          }}
+        >
+          Analysis Result
+        </h2>
+
+        <p
+          style={{
+            marginTop: "5px",
+            color: "#64748b",
+          }}
+        >
+          AI detection completed successfully
+        </p>
+      </div>
+    </div>
+
+    <div
+      style={{
+        display: "flex",
+        gap: "14px",
+        marginBottom: "18px",
+      }}
+    >
+      <div
+        style={{
+          padding: "10px 16px",
+
+          borderRadius: "999px",
+
+          backgroundColor:
+            result.prediction === "malignant"
+              ? "#fee2e2"
+              : "#dcfce7",
+
+          color:
+            result.prediction === "malignant"
+              ? "#b91c1c"
+              : "#166534",
+
+          fontWeight: "700",
+
+          fontSize: "14px",
+        }}
+      >
+        {result.prediction === "malignant"
+          ? "Tumor Detected"
+          : "No Tumor Detected"}
+      </div>
+    </div>
+
+    <div
+      style={{
+        background: "#f8fafc",
+
+        borderRadius: "18px",
+
+        padding: "18px",
+      }}
+    >
+      <p
+        style={{
+          margin: "0 0 10px",
+          color: "#64748b",
+          fontSize: "14px",
+        }}
+      >
+        Tumor Type
+      </p>
+
+      <h3
+        style={{
+          margin: 0,
+          color: "#0f172a",
+          textTransform: "capitalize",
+        }}
+      >
+        {result.prediction}
+      </h3>
+    </div>
+  </div>
+) : null}
+   
     </PageContainer>
+     
+   
   )
 }
