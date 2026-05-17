@@ -45,11 +45,9 @@ export default function HistoryPage() {
   }, [])
   const groupedPatients = items.reduce(
   (acc, item) => {
+
     const patientName =
-      item.patient?.name ||
-      item.patient_name ||
-      item.patient ||
-      'Unknown Patient'
+      `Patient ${item.patient_id}`
 
     // if patient does not exist yet
     if (!acc[patientName]) {
