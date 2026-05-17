@@ -23,6 +23,7 @@ export default function HistoryPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [items, setItems] = useState([])
+ 
 
   useEffect(() => {
     async function loadHistory() {
@@ -42,6 +43,26 @@ export default function HistoryPage() {
 
     loadHistory()
   }, [])
+  const groupedPatients = items.reduce(
+  (acc, item) => {
+    const patientName =
+      item.patient?.name ||
+      item.patient_name ||
+      item.patient ||
+      'Unknown Patient'
+
+    // if patient does not exist yet
+    if (!acc[patientName]) {
+      acc[patientName] = []
+    }
+
+    // add analysis to this patient
+    acc[patientName].push(item)
+
+    return acc
+  },
+  {}
+)
 
   return (
     <PageContainer>
@@ -158,210 +179,213 @@ export default function HistoryPage() {
               gap: '22px',
             }}
           >
-            {items.map((item) => (
+            {Object.entries(groupedPatients).map(
+  ([patientName, analyses]) => (
+    <div
+      key={patientName}
+      style={{
+        background:
+          'linear-gradient(135deg, #ffffff, #f9fbff)',
+
+        borderRadius: '30px',
+
+        padding: '26px',
+
+        border: `1px solid ${BORDER}`,
+
+        boxShadow:
+          '0 10px 25px rgba(15, 23, 42, 0.05)',
+      }}
+    >
+      {/* PATIENT HEADER */}
+      <div
+        style={{
+          display: 'flex',
+
+          alignItems: 'center',
+
+          gap: '12px',
+
+          marginBottom: '22px',
+        }}
+      >
+        <div
+          style={{
+            width: '46px',
+
+            height: '46px',
+
+            borderRadius: '14px',
+
+            background:
+              'linear-gradient(135deg, #dbeafe, #eff6ff)',
+
+            display: 'flex',
+
+            alignItems: 'center',
+
+            justifyContent: 'center',
+
+            color: '#2563eb',
+
+            fontSize: '18px',
+          }}
+        >
+          <FaUserInjured />
+        </div>
+
+        <div>
+          <h2
+            style={{
+              margin: 0,
+
+              fontSize: '24px',
+
+              fontWeight: '700',
+
+              color: '#0f172a',
+            }}
+          >
+            {patientName}
+          </h2>
+
+          <p
+            style={{
+              margin: '4px 0 0',
+
+              color: '#64748b',
+
+              fontSize: '14px',
+            }}
+          >
+            {analyses.length} analyses
+          </p>
+        </div>
+      </div>
+
+      {/* ANALYSES */}
+      <div
+        style={{
+          display: 'flex',
+
+          flexDirection: 'column',
+
+          gap: '16px',
+        }}
+      >
+        {analyses.map((analysis) => (
+          <div
+            key={analysis.analysis_id}
+            style={{
+              padding: '18px',
+
+              borderRadius: '20px',
+
+              border: '1px solid #e2e8f0',
+
+              background: '#ffffff',
+
+              display: 'flex',
+
+              justifyContent: 'space-between',
+
+              alignItems: 'center',
+
+              flexWrap: 'wrap',
+
+              gap: '16px',
+            }}
+          >
+            <div>
+              {/* FILE */}
               <div
-                key={item.analysis_id}
                 style={{
-                  background:
-                    'linear-gradient(135deg, #ffffff, #f9fbff)',
+                  display: 'flex',
 
-                  borderRadius: '30px',
+                  alignItems: 'center',
 
-                  padding: '26px',
+                  gap: '10px',
 
-                  border: `1px solid ${BORDER}`,
+                  marginBottom: '10px',
 
-                  boxShadow:
-                    '0 10px 25px rgba(15, 23, 42, 0.05)',
+                  color: '#475569',
 
-                  transition: '0.25s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform =
-                    'translateY(-4px)'
-
-                  e.currentTarget.style.boxShadow =
-                    '0 18px 35px rgba(15, 23, 42, 0.08)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform =
-                    'translateY(0px)'
-
-                  e.currentTarget.style.boxShadow =
-                    '0 10px 25px rgba(15, 23, 42, 0.05)'
+                  fontSize: '14px',
                 }}
               >
-                <div
+                <FaFileMedical
                   style={{
-                    display: 'flex',
-
-                    justifyContent: 'space-between',
-
-                    alignItems: 'center',
-
-                    gap: '20px',
-
-                    flexWrap: 'wrap',
+                    color: '#2563eb',
                   }}
-                >
-                  {/* LEFT SIDE */}
-                  <div>
-                    {/* PATIENT NAME */}
-                    <div
-                      style={{
-                        display: 'flex',
+                />
 
-                        alignItems: 'center',
-
-                        gap: '12px',
-
-                        marginBottom: '14px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '46px',
-
-                          height: '46px',
-
-                          borderRadius: '14px',
-
-                          background:
-                            'linear-gradient(135deg, #dbeafe, #eff6ff)',
-
-                          display: 'flex',
-
-                          alignItems: 'center',
-
-                          justifyContent: 'center',
-
-                          color: '#2563eb',
-
-                          fontSize: '18px',
-                        }}
-                      >
-                        <FaUserInjured />
-                      </div>
-
-                      <div>
-                        <h2
-                          style={{
-                            margin: 0,
-
-                            fontSize: '24px',
-
-                            fontWeight: '700',
-
-                            color: '#0f172a',
-                          }}
-                        >
-                          {item.patient?.name ||
-                            item.patient_name ||
-                            item.patient ||
-                            'Patient'}
-                        </h2>
-
-                        <p
-                          style={{
-                            margin: '4px 0 0',
-
-                            color: '#64748b',
-
-                            fontSize: '14px',
-                          }}
-                        >
-                          AI Analysis Record
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* FILE */}
-                    <div
-                      style={{
-                        display: 'flex',
-
-                        alignItems: 'center',
-
-                        gap: '10px',
-
-                        marginBottom: '12px',
-
-                        color: '#475569',
-
-                        fontSize: '14px',
-                      }}
-                    >
-                      <FaFileMedical
-                        style={{
-                          color: '#2563eb',
-                        }}
-                      />
-
-                      <span>
-                        {item.filename}
-                      </span>
-                    </div>
-
-                    {/* DATE */}
-                    <div
-                      style={{
-                        display: 'flex',
-
-                        alignItems: 'center',
-
-                        gap: '10px',
-
-                        color: '#64748b',
-
-                        fontSize: '14px',
-                      }}
-                    >
-                      <FaRegCalendarAlt />
-
-                      <span>
-                        {formatDate(item.date)}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* BUTTON */}
-                  <Link
-                    to={ROUTES.analysisDetail(
-                      item.analysis_id
-                    )}
-                    style={{
-                      display: 'flex',
-
-                      alignItems: 'center',
-
-                      gap: '10px',
-
-                      background:
-                        'linear-gradient(135deg, #2563eb, #3b82f6)',
-
-                      color: 'white',
-
-                      textDecoration: 'none',
-
-                      padding: '14px 22px',
-
-                      borderRadius: '18px',
-
-                      fontWeight: '700',
-
-                      fontSize: '14px',
-
-                      boxShadow:
-                        '0 8px 20px rgba(37, 99, 235, 0.25)',
-                    }}
-                  >
-                    View Analysis
-
-                    <FaArrowRight />
-                  </Link>
-                </div>
+                <span>
+                  {analysis.filename}
+                </span>
               </div>
-            ))}
+
+              {/* DATE */}
+              <div
+                style={{
+                  display: 'flex',
+
+                  alignItems: 'center',
+
+                  gap: '10px',
+
+                  color: '#64748b',
+
+                  fontSize: '14px',
+                }}
+              >
+                <FaRegCalendarAlt />
+
+                <span>
+                  {formatDate(
+                    analysis.date
+                  )}
+                </span>
+              </div>
+            </div>
+
+            {/* BUTTON */}
+            <Link
+              to={ROUTES.analysisDetail(
+                analysis.analysis_id
+              )}
+              style={{
+                display: 'flex',
+
+                alignItems: 'center',
+
+                gap: '10px',
+
+                background:
+                  'linear-gradient(135deg, #2563eb, #3b82f6)',
+
+                color: 'white',
+
+                textDecoration: 'none',
+
+                padding: '12px 18px',
+
+                borderRadius: '16px',
+
+                fontWeight: '700',
+
+                fontSize: '14px',
+              }}
+            >
+              View Analysis
+
+              <FaArrowRight />
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+)}
           </div>
         )}
       </div>
