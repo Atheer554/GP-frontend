@@ -14,7 +14,7 @@ import ErrorMessage from '../components/common/ErrorMessage.jsx'
 
 import { formatDate } from '../utils/formatDate.js'
 import { ROUTES } from '../utils/constants.js'
-
+import client from '../api/client'
 import { getHistoryApi } from '../api/analysisApi.js'
 
 const BORDER = '#e2e8f0'
@@ -23,12 +23,17 @@ export default function HistoryPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [items, setItems] = useState([])
+  const [patients, setPatients] = useState([])
  
 
   useEffect(() => {
     async function loadHistory() {
       try {
         const data = await getHistoryApi()
+        const patientsResponse =
+  await client.get('/patients/')
+
+setPatients(patientsResponse.data)
 
         console.log(data)
 
@@ -46,8 +51,12 @@ export default function HistoryPage() {
   const groupedPatients = items.reduce(
   (acc, item) => {
 
-    const patientName =
-      `Patient ${item.patient_id}`
+   const patient = patients.find(
+  (p) => p.id === item.patient_id
+)
+
+const patientName =
+  patient?.name || 'Unknown Patient'
 
     // if patient does not exist yet
     if (!acc[patientName]) {
