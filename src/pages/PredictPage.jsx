@@ -3,6 +3,7 @@ import PageContainer from '../components/layout/PageContainer.jsx'
 import LoadingSpinner from '../components/common/LoadingSpinner.jsx'
 import ErrorMessage from '../components/common/ErrorMessage.jsx'
 import {predictApi} from '../api/analysisApi.js'
+import medicalAI from "../assets/medical-ai1.png"
 
 import {fetchPatients} from '../api/patientApi'
 import client from '../api/client'
@@ -439,7 +440,7 @@ const handleAnalyze = async () => {
     }}
   >
     <img
-      src="/medical-ai.svg"
+     src={medicalAI}
       alt="Medical AI"
       style={{
         width: "100%",
