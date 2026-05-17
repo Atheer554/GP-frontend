@@ -135,7 +135,7 @@ async function loadHistory(patientId) {
             boxShadow:
               '0 12px 30px rgba(15, 23, 42, 0.06)',
           }}
-        >
+        
           <h1
             style={{
               margin: 0,
