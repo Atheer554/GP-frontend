@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 import {createPatient} from '../api/patientApi'
 import client from '../api/client'
+import PageContainer from '../components/layout/PageContainer.jsx'
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState([])
@@ -25,7 +26,8 @@ export default function PatientsPage() {
       const response = await client.get("/patients/")
       setPatients(response.data)
     } catch (error) {
-      console.error(error)
+      console.error(error.response?.data)
+  alert(JSON.stringify(error.response?.data))
     }
   }
 
@@ -57,39 +59,107 @@ export default function PatientsPage() {
   }
 }
 
-  return (
-    <div style={{ padding: "40px" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "30px",
-        }}
-      >
-        <h1>Patients List</h1>
-
-        <button
-          onClick={() => setShowForm(!showForm)}
+ return (
+  <PageContainer>
+  <div
+  style={{
+    minHeight: "100vh",
+    padding: "20px 40px",
+    fontFamily: "Inter, sans-serif",
+  }}
+>
+    {/* PAGE HEADER */}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: "30px",
+      }}
+    >
+      <div>
+        <h1
           style={{
-            padding: "10px 18px",
-            border: "none",
-            borderRadius: "10px",
-            cursor: "pointer",
+            margin: 0,
+            fontSize: "38px",
+            color: "#0f172a",
           }}
         >
-          Add Patient
-        </button>
+          Patients List
+        </h1>
+
+        <p
+          style={{
+            color: "#475569",
+            marginTop: "8px",
+            fontSize: "16px",
+          }}
+        >
+          Manage and review patient records.
+        </p>
       </div>
 
-      {showForm && (
+      <button
+        onClick={() => setShowForm(!showForm)}
+        style={{
+          backgroundColor: "#2563eb",
+          color: "white",
+
+          border: "none",
+
+          padding: "14px 20px",
+
+          borderRadius: "14px",
+
+          fontWeight: "600",
+
+          cursor: "pointer",
+
+          boxShadow:
+            "0 4px 14px rgba(37, 99, 235, 0.25)",
+
+          transition: "0.2s ease",
+        }}
+      >
+        {showForm ? "Close Form" : "+ Add Patient"}
+      </button>
+    </div>
+
+    {/* FORM CARD */}
+    {showForm && (
+      <div
+        style={{
+          background: "white",
+
+          borderRadius: "24px",
+
+          padding: "30px",
+
+          marginBottom: "30px",
+
+          border: "1px solid #e2e8f0",
+
+          boxShadow:
+            "0 8px 24px rgba(15, 23, 42, 0.06)",
+
+          maxWidth: "500px",
+        }}
+      >
+        <h2
+          style={{
+            marginTop: 0,
+            marginBottom: "20px",
+            color: "#0f172a",
+          }}
+        >
+          Add New Patient
+        </h2>
+
         <div
           style={{
-            marginBottom: "30px",
             display: "flex",
             flexDirection: "column",
-            gap: "10px",
-            maxWidth: "400px",
+            gap: "14px",
           }}
         >
           <input
@@ -97,6 +167,7 @@ export default function PatientsPage() {
             placeholder="Patient Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            style={inputStyle}
           />
 
           <input
@@ -104,6 +175,7 @@ export default function PatientsPage() {
             placeholder="Patient ID"
             value={patientId}
             onChange={(e) => setPatientId(e.target.value)}
+            style={inputStyle}
           />
 
           <input
@@ -111,22 +183,64 @@ export default function PatientsPage() {
             placeholder="Age"
             value={age}
             onChange={(e) => setAge(e.target.value)}
+            style={inputStyle}
           />
 
           <select
             value={gender}
             onChange={(e) => setGender(e.target.value)}
+            style={inputStyle}
           >
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
 
-          <button onClick={handleAddPatient}>
+          <button
+            onClick={handleAddPatient}
+            style={{
+              backgroundColor: "#2563eb",
+
+              color: "white",
+
+              border: "none",
+
+              padding: "14px",
+
+              borderRadius: "14px",
+
+              fontWeight: "600",
+
+              cursor: "pointer",
+
+              marginTop: "10px",
+
+              boxShadow:
+                "0 4px 14px rgba(37, 99, 235, 0.25)",
+            }}
+          >
             Save Patient
           </button>
         </div>
-      )}
+      </div>
+    )}
 
+    {/* TABLE CARD */}
+    <div
+      style={{
+        background: "white",
+
+        borderRadius: "24px",
+
+        padding: "30px",
+
+        border: "1px solid #e2e8f0",
+
+        boxShadow:
+          "0 8px 24px rgba(15, 23, 42, 0.06)",
+
+        overflowX: "auto",
+      }}
+    >
       <table
         style={{
           width: "100%",
@@ -145,27 +259,98 @@ export default function PatientsPage() {
 
         <tbody>
           {patients.map((patient) => (
-            <tr key={patient.id}>
+            <tr
+              key={patient.id}
+              style={{
+                transition: "0.2s ease",
+              }}
+            >
               <td style={tableCell}>{patient.id}</td>
-              <td style={tableCell}>{patient.patient_id}</td>
-              <td style={tableCell}>{patient.name}</td>
-              <td style={tableCell}>{patient.age}</td>
-              <td style={tableCell}>{patient.gender}</td>
+
+              <td style={tableCell}>
+                {patient.patient_id}
+              </td>
+
+              <td style={tableCell}>
+                {patient.name}
+              </td>
+
+              <td style={tableCell}>
+                {patient.age}
+              </td>
+
+              <td style={tableCell}>
+                <span
+                  style={{
+                    padding: "6px 12px",
+
+                    borderRadius: "999px",
+
+                    backgroundColor:
+                      patient.gender === "male"
+                        ? "#dbeafe"
+                        : "#fce7f3",
+
+                    color:
+                      patient.gender === "male"
+                        ? "#1d4ed8"
+                        : "#be185d",
+
+                    fontSize: "14px",
+
+                    fontWeight: "600",
+                  }}
+                >
+                  {patient.gender}
+                </span>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  )
-}
+    </div>
+  </PageContainer>
+)
 
+
+}
 const tableHeader = {
-  borderBottom: "1px solid #ccc",
-  padding: "12px",
   textAlign: "left",
+
+  padding: "18px",
+
+  color: "#475569",
+
+  fontWeight: "600",
+
+  borderBottom: "1px solid #e2e8f0",
+
+  fontSize: "15px",
 }
 
 const tableCell = {
-  borderBottom: "1px solid #eee",
-  padding: "12px",
+  padding: "20px 18px",
+
+  borderBottom: "1px solid #f1f5f9",
+
+  color: "#0f172a",
+}
+
+const inputStyle = {
+  width: "100%",
+
+  border: "1px solid #dbe3ee",
+
+  borderRadius: "14px",
+
+  padding: "14px 16px",
+
+  boxSizing: "border-box",
+
+  fontSize: "15px",
+
+  backgroundColor: "#f8fafc",
+
+  outline: "none",
 }

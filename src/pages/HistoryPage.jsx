@@ -1,19 +1,24 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import {
+  FaRegCalendarAlt,
+  FaArrowRight,
+  FaUserInjured,
+  FaFileMedical,
+} from 'react-icons/fa'
+
 import PageContainer from '../components/layout/PageContainer.jsx'
 import LoadingSpinner from '../components/common/LoadingSpinner.jsx'
 import ErrorMessage from '../components/common/ErrorMessage.jsx'
+
 import { formatDate } from '../utils/formatDate.js'
 import { ROUTES } from '../utils/constants.js'
+
 import { getHistoryApi } from '../api/analysisApi.js'
 import {fetchPatients} from '../api/patientApi'
 
-const BORDER = '#d1e3f8'
-const PRIMARY = '#2a7fd4'
-const TITLE_COLOR = '#1a1a2e'
-const CARD_SHADOW = '0 2px 12px rgba(26, 26, 46, 0.08)'
-
-
+const BORDER = '#e2e8f0'
 
 export default function HistoryPage() {
   const [loading, setLoading] = useState(false)
@@ -25,6 +30,22 @@ export default function HistoryPage() {
   useEffect(() => {
   loadPatients()
 }, [])
+
+    async function loadHistory() {
+      try {
+        const data = await getHistoryApi()
+
+        console.log(data)
+
+        setItems(data)
+      } catch (err) {
+        console.error(err)
+        setError('Failed to load history')
+      } finally {
+        setLoading(false)
+      }
+    }
+
 
 async function loadPatients() {
   try {
@@ -51,33 +72,15 @@ async function loadHistory(patientId) {
   }
 }
 
-  const cardStyle = {
-    backgroundColor: '#ffffff',
-    borderRadius: '10px',
-    boxShadow: CARD_SHADOW,
-    border: `1px solid ${BORDER}`,
-    padding: '18px 20px',
-  }
-
   return (
     <PageContainer>
-      <header style={{ marginBottom: '28px' }}>
-        <h1
-          style={{
-            margin: '0 0 8px',
-            fontSize: '26px',
-            fontWeight: 700,
-            color: TITLE_COLOR,
-          }}
-        >
-          Analysis History
-        </h1>
-        <p style={{ margin: 0, fontSize: '16px', color: '#4b5563' }}>
-          Your previous breast cancer analyses
-        </p>
-      </header>
+      <div
+        style={{
+          minHeight: '100vh',
 
-      <ErrorMessage message={error} />
+          background:
+            'linear-gradient(to bottom, #f8fbff, #eef5ff)',
+
 
       <div style={{ marginBottom: '20px' }}>
   <select
@@ -107,88 +110,321 @@ async function loadHistory(patientId) {
         <LoadingSpinner />
       ) : items.length === 0 ? (
         <p
+
+          padding: '40px',
+
+          fontFamily:
+            "'Inter', 'Segoe UI', sans-serif",
+        }}
+      >
+        {/* HEADER */}
+        <div
+>
           style={{
-            marginTop: error ? '20px' : 0,
-            padding: '32px 16px',
-            textAlign: 'center',
-            fontSize: '16px',
-            color: '#6b7280',
-            backgroundColor: '#ffffff',
-            borderRadius: '10px',
-            boxShadow: CARD_SHADOW,
+            background:
+              'linear-gradient(135deg, #ffffff, #f8fbff)',
+
+            borderRadius: '32px',
+
+            padding: '38px',
+
+            marginBottom: '34px',
+
             border: `1px solid ${BORDER}`,
+
+            boxShadow:
+              '0 12px 30px rgba(15, 23, 42, 0.06)',
           }}
         >
-          No analyses yet
-        </p>
-      ) : (
-        <ul
-          style={{
-            margin: error ? '20px 0 0' : '0',
-            padding: 0,
-            listStyle: 'none',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '14px',
-          }}
-        >
-          {items.map((item) => (
-            <li key={item.analysis_id} style={cardStyle}>
+          <h1
+            style={{
+              margin: 0,
+
+              fontSize: '42px',
+
+              fontWeight: '800',
+
+              letterSpacing: '-1px',
+
+              color: '#0f172a',
+            }}
+          >
+            Analysis History
+          </h1>
+
+          <p
+            style={{
+              marginTop: '12px',
+
+              marginBottom: 0,
+
+              color: '#64748b',
+
+              fontSize: '17px',
+            }}
+          >
+            Review previous AI breast cancer analyses
+          </p>
+        </div>
+
+        <ErrorMessage message={error} />
+
+        {loading ? (
+          <LoadingSpinner />
+        ) : items.length === 0 ? (
+          <div
+            style={{
+              background: '#ffffff',
+
+              borderRadius: '28px',
+
+              padding: '70px 30px',
+
+              textAlign: 'center',
+
+              border: `1px solid ${BORDER}`,
+
+              boxShadow:
+                '0 10px 24px rgba(15, 23, 42, 0.05)',
+            }}
+          >
+            <h2
+              style={{
+                margin: 0,
+
+                color: '#0f172a',
+              }}
+            >
+              No analyses yet
+            </h2>
+
+            <p
+              style={{
+                marginTop: '12px',
+
+                color: '#64748b',
+              }}
+            >
+              Patient analyses will appear here
+            </p>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+
+              flexDirection: 'column',
+
+              gap: '22px',
+            }}
+          >
+            {items.map((item) => (
               <div
+                key={item.analysis_id}
                 style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'flex-start',
-                  justifyContent: 'space-between',
-                  gap: '12px',
+                  background:
+                    'linear-gradient(135deg, #ffffff, #f9fbff)',
+
+                  borderRadius: '30px',
+
+                  padding: '26px',
+
+                  border: `1px solid ${BORDER}`,
+
+                  boxShadow:
+                    '0 10px 25px rgba(15, 23, 42, 0.05)',
+
+                  transition: '0.25s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform =
+                    'translateY(-4px)'
+
+                  e.currentTarget.style.boxShadow =
+                    '0 18px 35px rgba(15, 23, 42, 0.08)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform =
+                    'translateY(0px)'
+
+                  e.currentTarget.style.boxShadow =
+                    '0 10px 25px rgba(15, 23, 42, 0.05)'
                 }}
               >
-                <div style={{ flex: '1 1 200px', minWidth: 0 }}>
-                  <p style={{ margin: '0 0 6px', fontSize: '13px', color: '#6b7280' }}>
-                    {formatDate(item.date)}
-                  </p>
-                  <p
-                    style={{
-                      margin: '0 0 10px',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: TITLE_COLOR,
-                      wordBreak: 'break-word',
-                    }}
-                  >
-                    {item.filename}
-                  </p>
-                  <span
-                    style={{
-                      display: 'inline-block',
-                      padding: '6px 12px',
-                      borderRadius: '999px',
-                      fontSize: '12px',
-                      fontWeight: 700,
-                      color: '#ffffff',
-                      backgroundColor: item.has_tumor ? '#dc2626' : '#16a34a',
-                    }}
-                  >
-                    {item.has_tumor ? 'Tumor detected' : 'No tumor indicated'}
-                  </span>
-                </div>
-                <Link
-                  to={ROUTES.analysisDetail(item.analysis_id)}
+                <div
                   style={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    color: PRIMARY,
-                    textDecoration: 'none',
-                    alignSelf: 'center',
+                    display: 'flex',
+
+                    justifyContent: 'space-between',
+
+                    alignItems: 'center',
+
+                    gap: '20px',
+
+                    flexWrap: 'wrap',
                   }}
                 >
-                  View Details →
-                </Link>
+                  {/* LEFT SIDE */}
+                  <div>
+                    {/* PATIENT NAME */}
+                    <div
+                      style={{
+                        display: 'flex',
+
+                        alignItems: 'center',
+
+                        gap: '12px',
+
+                        marginBottom: '14px',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: '46px',
+
+                          height: '46px',
+
+                          borderRadius: '14px',
+
+                          background:
+                            'linear-gradient(135deg, #dbeafe, #eff6ff)',
+
+                          display: 'flex',
+
+                          alignItems: 'center',
+
+                          justifyContent: 'center',
+
+                          color: '#2563eb',
+
+                          fontSize: '18px',
+                        }}
+                      >
+                        <FaUserInjured />
+                      </div>
+
+                      <div>
+                        <h2
+                          style={{
+                            margin: 0,
+
+                            fontSize: '24px',
+
+                            fontWeight: '700',
+
+                            color: '#0f172a',
+                          }}
+                        >
+                          {item.patient?.name ||
+                            item.patient_name ||
+                            item.patient ||
+                            'Patient'}
+                        </h2>
+
+                        <p
+                          style={{
+                            margin: '4px 0 0',
+
+                            color: '#64748b',
+
+                            fontSize: '14px',
+                          }}
+                        >
+                          AI Analysis Record
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* FILE */}
+                    <div
+                      style={{
+                        display: 'flex',
+
+                        alignItems: 'center',
+
+                        gap: '10px',
+
+                        marginBottom: '12px',
+
+                        color: '#475569',
+
+                        fontSize: '14px',
+                      }}
+                    >
+                      <FaFileMedical
+                        style={{
+                          color: '#2563eb',
+                        }}
+                      />
+
+                      <span>
+                        {item.filename}
+                      </span>
+                    </div>
+
+                    {/* DATE */}
+                    <div
+                      style={{
+                        display: 'flex',
+
+                        alignItems: 'center',
+
+                        gap: '10px',
+
+                        color: '#64748b',
+
+                        fontSize: '14px',
+                      }}
+                    >
+                      <FaRegCalendarAlt />
+
+                      <span>
+                        {formatDate(item.date)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* BUTTON */}
+                  <Link
+                    to={ROUTES.analysisDetail(
+                      item.analysis_id
+                    )}
+                    style={{
+                      display: 'flex',
+
+                      alignItems: 'center',
+
+                      gap: '10px',
+
+                      background:
+                        'linear-gradient(135deg, #2563eb, #3b82f6)',
+
+                      color: 'white',
+
+                      textDecoration: 'none',
+
+                      padding: '14px 22px',
+
+                      borderRadius: '18px',
+
+                      fontWeight: '700',
+
+                      fontSize: '14px',
+
+                      boxShadow:
+                        '0 8px 20px rgba(37, 99, 235, 0.25)',
+                    }}
+                  >
+                    View Analysis
+
+                    <FaArrowRight />
+                  </Link>
+                </div>
               </div>
-            </li>
-          ))}
-        </ul>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </PageContainer>
   )
 }

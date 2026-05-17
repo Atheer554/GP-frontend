@@ -1,149 +1,306 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import PageContainer from '../components/layout/PageContainer.jsx'
 import ErrorMessage from '../components/common/ErrorMessage.jsx'
 import LoadingSpinner from '../components/common/LoadingSpinner.jsx'
-import { ROUTES } from '../utils/constants.js'
-import {registerApi} from '../api/authApi.js'
 
-const BORDER = '#d1e3f8'
-const PRIMARY = '#2a7fd4'
-const TITLE_COLOR = '#1a1a2e'
+import { ROUTES } from '../utils/constants.js'
+import { registerApi } from '../api/authApi.js'
+
+import logo from '../assets/logo.png'
+
+const BORDER = '#dbe3ee'
+const PRIMARY = '#2563eb'
+const TITLE_COLOR = '#0f172a'
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
   const [loading] = useState(false)
   const [error] = useState('')
 
   const handleSubmit = async (e) => {
-  e.preventDefault()
+    e.preventDefault()
 
-  try {
-    const result = await registerApi({
-      username,
-      email,
-      password,
-    })
+    try {
+      const result = await registerApi({
+        username,
+        email,
+        password,
+      })
 
-    console.log(result)
-    alert('Registered successfully!')
-  } catch (err) {
-    console.error(err)
-    alert('Register failed')
+      console.log(result)
+
+      alert('Registered successfully!')
+    } catch (err) {
+      console.error(err)
+
+      alert('Register failed')
+    }
   }
-}
 
   return (
-    <PageContainer>
+    <PageContainer showNavbar={false}>
       <div
         style={{
-          backgroundColor: '#ffffff',
-          borderRadius: '8px',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
-          maxWidth: '420px',
-          margin: '20px auto 0',
+          minHeight: '100vh',
+
+          display: 'flex',
+
+          justifyContent: 'center',
+
+          alignItems: 'center',
+
           padding: '40px',
+
+          fontFamily: 'Inter, sans-serif',
         }}
       >
-        <h1
+        <div
           style={{
-            margin: '0 0 8px',
-            fontSize: '28px',
-            fontWeight: 700,
-            color: TITLE_COLOR,
-            textAlign: 'center',
+            backgroundColor: '#ffffff',
+
+            borderRadius: '28px',
+
+            border: '1px solid #e2e8f0',
+
+            boxShadow:
+              '0 8px 24px rgba(15, 23, 42, 0.06)',
+
+            width: '100%',
+
+            maxWidth: '460px',
+
+            padding: '45px',
           }}
         >
-          Create Account
-        </h1>
-        <p style={{ margin: '0 0 24px', color: '#4b5563', textAlign: 'center' }}>
-          Join ELPIS AI
-        </p>
-
-        <ErrorMessage message={error} />
-
-        <form onSubmit={handleSubmit} style={{ marginTop: error ? '12px' : 0 }}>
-          <div style={{ marginBottom: '14px' }}>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={{
-                width: '100%',
-                border: `1px solid ${BORDER}`,
-                borderRadius: '6px',
-                padding: '10px 12px',
-                boxSizing: 'border-box',
-                fontSize: '15px',
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '14px' }}>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{
-                width: '100%',
-                border: `1px solid ${BORDER}`,
-                borderRadius: '6px',
-                padding: '10px 12px',
-                boxSizing: 'border-box',
-                fontSize: '15px',
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '16px' }}>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{
-                width: '100%',
-                border: `1px solid ${BORDER}`,
-                borderRadius: '6px',
-                padding: '10px 12px',
-                boxSizing: 'border-box',
-                fontSize: '15px',
-              }}
-            />
-          </div>
-
-          <button
-            type="submit"
+          {/* LOGO */}
+          <div
             style={{
-              width: '100%',
-              backgroundColor: PRIMARY,
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '11px 12px',
-              fontSize: '15px',
-              fontWeight: 600,
-              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '18px',
+            }}
+          >
+            <img
+              src={logo}
+              alt="ELPIS AI Logo"
+              style={{
+                width: '90px',
+                objectFit: 'contain',
+              }}
+            />
+          </div>
+
+          {/* BRAND */}
+          <h2
+            style={{
+              textAlign: 'center',
+              marginBottom: '8px',
+              color: PRIMARY,
+              fontWeight: '700',
+              fontSize: '18px',
+              letterSpacing: '1px',
+            }}
+          >
+            ELPIS AI
+          </h2>
+
+          {/* TITLE */}
+          <h1
+            style={{
+              margin: '0 0 10px',
+
+              fontSize: '34px',
+
+              fontWeight: 700,
+
+              color: TITLE_COLOR,
+
+              textAlign: 'center',
             }}
           >
             Create Account
-          </button>
-        </form>
+          </h1>
 
-        {loading ? <LoadingSpinner /> : null}
+          {/* SUBTITLE */}
+          <p
+            style={{
+              margin: '0 0 30px',
 
-        <p style={{ margin: '20px 0 0', textAlign: 'center', color: '#4b5563' }}>
-          <Link
-            to={ROUTES.login}
-            style={{ color: PRIMARY, textDecoration: 'none', fontWeight: 600 }}
+              color: '#475569',
+
+              textAlign: 'center',
+
+              lineHeight: '1.6',
+            }}
           >
-            Already have an account? Sign In
-          </Link>
-        </p>
+            Join the AI-powered breast cancer
+            detection platform.
+          </p>
+
+          <ErrorMessage message={error} />
+
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              marginTop: error ? '12px' : 0,
+            }}
+          >
+            {/* USERNAME */}
+            <div style={{ marginBottom: '16px' }}>
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) =>
+                  setUsername(e.target.value)
+                }
+                style={{
+                  width: '100%',
+
+                  border: `1px solid ${BORDER}`,
+
+                  borderRadius: '14px',
+
+                  padding: '14px 16px',
+
+                  boxSizing: 'border-box',
+
+                  fontSize: '15px',
+
+                  backgroundColor: '#f8fafc',
+
+                  transition: '0.2s ease',
+
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            {/* EMAIL */}
+            <div style={{ marginBottom: '16px' }}>
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+                style={{
+                  width: '100%',
+
+                  border: `1px solid ${BORDER}`,
+
+                  borderRadius: '14px',
+
+                  padding: '14px 16px',
+
+                  boxSizing: 'border-box',
+
+                  fontSize: '15px',
+
+                  backgroundColor: '#f8fafc',
+
+                  transition: '0.2s ease',
+
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            {/* PASSWORD */}
+            <div style={{ marginBottom: '22px' }}>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+                style={{
+                  width: '100%',
+
+                  border: `1px solid ${BORDER}`,
+
+                  borderRadius: '14px',
+
+                  padding: '14px 16px',
+
+                  boxSizing: 'border-box',
+
+                  fontSize: '15px',
+
+                  backgroundColor: '#f8fafc',
+
+                  transition: '0.2s ease',
+
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            {/* BUTTON */}
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+
+                backgroundColor: PRIMARY,
+
+                color: '#ffffff',
+
+                border: 'none',
+
+                borderRadius: '14px',
+
+                padding: '14px 16px',
+
+                fontSize: '15px',
+
+                fontWeight: 600,
+
+                cursor: 'pointer',
+
+                boxShadow:
+                  '0 4px 14px rgba(37, 99, 235, 0.25)',
+
+                transition: '0.2s ease',
+              }}
+            >
+              Create Account
+            </button>
+          </form>
+
+          {loading ? <LoadingSpinner /> : null}
+
+          {/* LOGIN */}
+          <p
+            style={{
+              margin: '24px 0 0',
+
+              textAlign: 'center',
+
+              color: '#475569',
+            }}
+          >
+            <Link
+              to={ROUTES.login}
+              style={{
+                color: PRIMARY,
+
+                textDecoration: 'none',
+
+                fontWeight: 600,
+              }}
+            >
+              Already have an account? Sign In
+            </Link>
+          </p>
+        </div>
       </div>
     </PageContainer>
   )
